@@ -1,5 +1,5 @@
 const express=require("express")
-const web=express()
+const con=express()
 const port=process.env.PORT || 3000
 const hbs=require("hbs")
 const path=require("path")
@@ -7,43 +7,43 @@ const views_path=path.join(__dirname,"../template/views")
 const body_parser=require("body-parser")
 require("./db/connection")
 const hodLogin=require("./models/HODSchema")
-const profLogin = require("./models/professorSchema");
+const profLogin = require("./models/ProfSchema");
 const submit=require("./models/submissions")
 
-web.use(body_parser.json())
-web.use(body_parser.urlencoded({extended:false}))
+con.use(body_parser.json())
+con.use(body_parser.urlencoded({extended:false}))
 
-web.use("/image",express.static(path.join(__dirname,"../template/public/assets/image")))
+con.use("/image",express.static(path.join(__dirname,"../template/public/assets/image")))
 
 
-web.set("view engine","hbs")
-web.set("views",views_path)
+con.set("view engine","hbs")
+con.set("views",views_path)
 
-web.listen(port,()=>{
+con.listen(port,()=>{
     console.log(`app running in port: ${port}`)
     console.log(views_path);
 })
 
-web.get("/home",(req,res) =>{
+con.get("/home",(req, res) =>{
     res.render("HOME")
 } )
-web.get("/proflogin",(req,res) =>{
+con.get("/proflogin",(req, res) =>{
     res.render("ProfLogin")
 } )
 
-web.get("/hodlogin",(req,res) =>{
+con.get("/hodlogin",(req, res) =>{
     res.render("HODLogin")
 } )
 
-web.get("/newhod",(req,res) =>{
+con.get("/newhod",(req, res) =>{
     res.render("newHOD")
 } )
 
-web.get("/papersubmit",(req,res)=>{
+con.get("/papersubmit",(req, res)=>{
     res.render("paper_submission")
 })
 
-web.post("/proflogin", async (req, res) => {
+con.post("/proflogin", async (req, res) => {
     try {
         const { profID, profpass } = req.body;
         const user = await profLogin.findOne({ profID: profID });
@@ -60,7 +60,7 @@ web.post("/proflogin", async (req, res) => {
     }
 });
 
-web.post("/save",async (req,res)=>{
+con.post("/save",async (req, res)=>{
     try {
         const submitData = new submit({
             title: req.body.title,
@@ -79,11 +79,11 @@ web.post("/save",async (req,res)=>{
     }
 
 })
-web.get("/hodHome",(req,res)=>{
+con.get("/hodHome",(req, res)=>{
     res.render("HODhome")
 })
 
-web.post("/hodSave", async (req, res) => {
+con.post("/hodSave", async (req, res) => {
     try {
         const existingUser = await hodLogin.findOne({ hodEmail: req.body.hodEmail });
         if (existingUser) {
@@ -102,7 +102,7 @@ web.post("/hodSave", async (req, res) => {
     }
 });
 
-web.post("/hodlogin", async (req, res) => {
+con.post("/hodlogin", async (req, res) => {
     try {
         const { hodEmail, hodfpass } = req.body;
         const user = await hodLogin.findOne({ hodEmail: hodEmail });
@@ -120,11 +120,11 @@ web.post("/hodlogin", async (req, res) => {
     }
 });
 
-web.get("/profreg",(req,res)=>{
+con.get("/profreg",(req, res)=>{
     res.render("profREG")
 })
 
-web.post("/profSave",async(req,res)=>{
+con.post("/profSave",async(req, res)=>{
     try{
         const existingEmail = await profLogin.findOne({ profEmail: req.body.profEmail });
         const existingID = await profLogin.findOne({ profID: req.body.profID });
@@ -155,12 +155,12 @@ web.post("/profSave",async(req,res)=>{
 })
 
 
-web.get("/hodPanel",(req,res)=>{
+con.get("/hodPanel",(req, res)=>{
     res.render("HODpanel")
 })
 
 
-web.get("/panel", async (req, res) => {
+con.get("/panel", async (req, res) => {
     try {
         const submissions = await submit.find();
         if (submissions && submissions.length > 0) {
@@ -174,7 +174,7 @@ web.get("/panel", async (req, res) => {
     }
 });
 
-web.post("/panel", async (req, res) => {
+con.post("/panel", async (req, res) => {
     try {
         const submissionId = req.body.id;
         console.log(submissionId);
@@ -192,11 +192,11 @@ web.post("/panel", async (req, res) => {
 });
 
 
-web.get("/regpanel",(req,res)=>{
+con.get("/regpanel",(req, res)=>{
     res.render("registered")
 })
 
-web.get("/reg", async (req, res) => {
+con.get("/reg", async (req, res) => {
     try {
         const submissions = await profLogin.find();
         if (submissions && submissions.length > 0) {
@@ -210,7 +210,7 @@ web.get("/reg", async (req, res) => {
     }
 });
 
-web.post("/reg", async (req, res) => {
+con.post("/reg", async (req, res) => {
     try {
         const submitId = req.body.id;
         console.log(submitId);
