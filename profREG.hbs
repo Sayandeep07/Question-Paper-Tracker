@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Question Paper Submission - Question Paper Tracker</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            width: 100%;
+            background-color: #4CAF50;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        header .logo {
+            width: 50px;
+            height: 50px;
+            background-size: cover;
+            margin-right: 1rem;
+        }
+
+        header h2 {
+            margin: 0;
+        }
+
+        main {
+            width: 100%;
+            max-width: 600px;
+            margin: 2rem auto;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+            border-radius: 8px;
+        }
+
+        .submission-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .submission-container h3 {
+            margin-bottom: 1.5rem;
+            color: #333;
+        }
+
+        form {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+
+        form input[type="text"],
+        form input[type="email"],
+        form input[type="tel"],
+        form input[type="password"],
+        form select {
+            width: 100%;
+            padding: 0.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        form label {
+            margin-bottom: 0.5rem;
+            color: #555;
+        }
+
+        .password-warning {
+            color: red;
+            font-size: 0.875rem;
+            margin-bottom: 1rem;
+        }
+
+        form button {
+            width: 100%;
+            padding: 0.75rem;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        form button:hover {
+            background-color: #45a049;
+        }
+
+    </style>
+</head>
+<body>
+<header>
+    <div class="logo">
+    </div>
+    <h2>New Professor Registration</h2>
+</header>
+<main>
+    <div class="submission-container">
+        <h3>Register the Professor</h3>
+        <form id="registrationForm" method="post" action="/profSave">
+            <input type="text" placeholder="Name" required name="profName">
+            <input type="email" placeholder="Email" required name="profEmail">
+            <input type="tel" placeholder="Employee ID" required maxlength="5" name="profID">
+            <select name="profGender" id="gender" required >
+                <option value="">Select Gender</option>
+                <option value="Male">Male</option>
+                <option value="Female">Female</option>
+                <option value="other">Other</option>
+            </select>
+            <input type="text" placeholder="Professor's Subject" name="profSub" required>
+            <input type="password" placeholder=" Create Password" required id="profpass" name="profpass" >
+            <div id="passwordWarning" class="password-warning"></div>
+            <input type="password" placeholder=" Confirm Password" required id="profCpass" name="profCpass" >
+            <div id="confirmPasswordWarning" class="password-warning"></div>
+            <button type="submit">Register</button>
+        </form>
+    </div>
+</main>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const passwordInput = document.getElementById("profpass");
+        const confirmPasswordInput = document.getElementById("profCpass");
+        const passwordWarning = document.getElementById("passwordWarning");
+        const confirmPasswordWarning = document.getElementById("confirmPasswordWarning");
+        const registrationForm = document.getElementById("registrationForm");
+
+        passwordInput.addEventListener("input", function() {
+            if (passwordInput.value.length < 8) {
+                passwordWarning.textContent = "Password must be at least 8 characters long";
+            } else {
+                passwordWarning.textContent = "";
+            }
+        });
+
+        registrationForm.addEventListener("input", function(event) {
+            if (passwordInput.value !== confirmPasswordInput.value) {
+                event.preventDefault();
+                confirmPasswordWarning.textContent = "Passwords do not match";
+            } else {
+                confirmPasswordWarning.textContent = "";
+            }
+        });
+    });
+</script>
+
+</body>
+</html>

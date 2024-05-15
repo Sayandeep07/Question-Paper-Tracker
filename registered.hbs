@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submission Tracking Panel - Question Paper Tracker</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        header .logo {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        header h2 {
+            margin: 0;
+        }
+
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 2rem;
+        }
+
+        .submission-panel {
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        table th,
+        table td {
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+        }
+
+        table th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        table tbody tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .review-button {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .review-button:hover {
+            background-color: #d32f2f;
+        }
+
+    </style>
+</head>
+<body>
+<header>
+    <div class="logo">
+        <p>Question Paper Tracker</p>
+    </div>
+    <h2>Registered Professors</h2>
+</header>
+<main>
+    <div class="submission-panel">
+        <table border="1px">
+            <thead>
+            <tr>
+                <th>Professor Name</th>
+                <th>Email</th>
+                <th>Employee ID</th>
+                <th>Gender</th>
+                <th>Professor's Subject</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#each submit}}
+            <form method="post" action="/reg">
+                <tr>
+                    <input name="id" hidden="hidden" type="text" value="{{this._id}}" >
+                    <td>{{this.profName}}</td>
+                    <td>{{this.profEmail}}</td>
+                    <td>{{this.profID}}</td>
+                    <td>{{this.profGender}}</td>
+                    <td>{{this.profSub}}</td>
+                    <td> <input class="review-button" type="submit" value="Delete"></td>
+                </tr>
+            </form>
+            {{/each}}
+            </tbody>
+        </table>
+    </div>
+</main>
+</body>
+</html>

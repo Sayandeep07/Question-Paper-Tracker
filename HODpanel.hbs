@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Submission Tracking Panel - Question Paper Tracker</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        header {
+            width: 100%;
+            background-color: #4CAF50;
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        header .logo {
+            width: 50px;
+            height: 50px;
+            background-size: cover;
+            margin-right: 1rem;
+        }
+
+        header h2 {
+            margin: 0;
+        }
+
+        main {
+            width: 100%;
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background-color: white;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 8px;
+        }
+
+        .submission-panel {
+            width: 100%;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            font-size: 1rem;
+            text-align: left;
+        }
+
+        table th, table td {
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+        }
+
+        table th {
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        table tbody tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        .review-button {
+            background-color: #f44336;
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .review-button:hover {
+            background-color: #d32f2f;
+        }
+
+    </style>
+</head>
+<body>
+<header>
+    <div class="logo">
+    </div>
+    <h2>Submission Tracking</h2>
+</header>
+<main>
+    <div class="submission-panel">
+        <table border="1px">
+            <thead>
+            <tr>
+                <th>Title</th>
+                <th>Professor</th>
+                <th>Subject</th>
+                <th>Subject Code</th>
+                <th>Date Submitted</th>
+                <th> Question Paper</th>
+                <th>Action</th>
+            </tr>
+            </thead>
+            <tbody>
+            {{#each submissions}}
+            <form method="post" action="/panel">
+                <tr>
+                    <input name="id" hidden="hidden" type="text" value="{{this._id}}" >
+                    <td>{{this.title}}</td>
+                    <td>{{this.Prof_name}}</td>
+                    <td>{{this.subject}}</td>
+                    <td>{{this.subCode}}</td>
+                    <td>{{this.date}}</td>
+                                            {{#if questionPaper}}
+
+                                                      {{this.questionPaper}}
+
+                                            {{/if}}
+                    <td>{{this.questionPaper}}</td>
+                    <td> <input class="review-button" type="submit" value="Delete"></td>
+                </tr>
+            </form>
+            {{/each}}
+            </tbody>
+        </table>
+    </div>
+</main>
+</body>
+</html>
