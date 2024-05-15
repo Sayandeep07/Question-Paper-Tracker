@@ -9,7 +9,6 @@ require("./db/connection")
 const hodLogin=require("./models/HODSchema")
 const profLogin = require("./models/professorSchema");
 const submit=require("./models/submissions")
-// const multer = require('multer');
 
 web.use(body_parser.json())
 web.use(body_parser.urlencoded({extended:false}))
@@ -24,20 +23,6 @@ web.listen(port,()=>{
     console.log(`app running in port: ${port}`)
     console.log(views_path);
 })
-
-// web.use("/upload",express.static(path.join(__dirname,"../upload")));
-//
-// const storage = multer.diskStorage({
-//     destination: (req, file, cb)=> {
-//         cb(null, 'upload/');
-//     },
-//     filename: function (req, file, cb) {
-//         console.log(file)
-//         cb(null, Date.now() + path.extname(file.originalname));
-//     }
-//
-// });
-// const upload = multer({storage : storage});
 
 web.get("/home",(req,res) =>{
     res.render("HOME")
@@ -77,7 +62,6 @@ web.post("/proflogin", async (req, res) => {
 
 web.post("/save",async (req,res)=>{
     try {
-        // const filepath=req.file.path
         const submitData = new submit({
             title: req.body.title,
             Prof_name: req.body.Prof_name,
@@ -85,7 +69,6 @@ web.post("/save",async (req,res)=>{
             subCode: req.body.subCode,
             date: req.body.date,
             questionPaper: req.body.questionPaper
-            // questionPaper: req.body.filename
         })
         const data = await submitData.save()
         res.send('<script>alert("Submission successful!"); window.location="/home";</script>');
@@ -96,11 +79,6 @@ web.post("/save",async (req,res)=>{
     }
 
 })
-// web.get('/uploads/:filename', (req, res) => {
-//     const filename = req.params.filename;
-//     res.sendFile(path.join(__dirname, "uploads", filename));
-// });
-
 web.get("/hodHome",(req,res)=>{
     res.render("HODhome")
 })
